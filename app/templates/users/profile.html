@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block hero_content %}
+  <h2>Welcome to your profile</h2>
+{% endblock %}
+
+{% block content %}
+  {% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+  <div class="container">
+    <h3>Hello {{ current_user.username }}!</h3>
+    <p>Welcome to your profile. From here you can check your credentials to use cucco.io API and also manage your credentials.</p>
+
+    <div class="row">
+      <div class="box column">
+        <h4>Your information</h4>
+        <div class="responsive-table">
+          <table>
+            <tr>
+              <td>Username</td>
+              <td><em>{{ current_user.username | safe }}</em></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><em>{{ current_user.email }}</em></td>
+            </tr>
+            <tr>
+              <td>Roles</td>
+              <td><em>{{ current_user.roles | join(', ') }}</em></td>
+            </tr>
+            <tr>
+              <td>Access key</td>
+              <td><em>{{ current_user.api_key }}</em></td>
+            </tr>
+          </table>
+        </div>
+        <a class="button" href="{{ url_for('users.generate') }}">Regenerate API key</a>
+        <a class="button" href="{{ url_for('users.logout') }}">Logout</a>
+      </div>
+      <div class="box column">
+        <h4>Update your password</h4>
+        <form action="{{ url_for('users.profile') }}"
+              method="POST" name="login_user_form">
+          {{ form.hidden_tag() }}
+          {{ render_field_with_errors(form.current_password) }}
+          {{ render_field_with_errors(form.password) }}
+          {{ render_field_with_errors(form.confirm) }}
+          <input class="button-primary" type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+
+    {% if users %}
+    <div id="users">
+      <h4>Users</h4>
+      <div class="responsive-table">
+        <table>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Created at</th>
+              <th>Roles</th>
+              <th>Actions</th>
+            </tr>
+            {% for user in users %}
+              <tr>
+                <td>{{ user.username | safe }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.created_at }}</td>
+                <td>{{ user.roles | join(', ') }}</td>
+                <td><a class="remove" data-id="{{ user.id }}" href="#">Remove</a></td>
+              </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+  <script>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+    (function() {
+      $('a.remove').bind('click', function() {
+        $.getJSON($SCRIPT_ROOT + '/users/' + $(this).attr('data-id') + '/remove', function(data) {
+          if (data['removed']) {
+            $('a[data-id="' + data['user_id'] + '"]').closest('tr').remove();
+          }
+        });
+
+        setTimeout(arguments.callee, 10000);
+
+        return false;
+      });
+    })();
+  </script>
+{% endblock %}

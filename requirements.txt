@@ -1,0 +1,10 @@
+bcrypt
+blueprint
+flask
+flask-migrate
+flask-security
+flask-session
+flask-sqlalchemy
+psycopg2
+requests
+pyyaml
