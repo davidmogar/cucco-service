@@ -6,6 +6,8 @@ from wtforms.validators import Required, Email, Length, Regexp, EqualTo, DataReq
 from app.models import user_datastore
 
 class UniqueUser(object):
+    """Validator to guarantee user uniqueness."""
+
     def __init__(self, message='User exists'):
         self.message = message
 
@@ -14,6 +16,8 @@ class UniqueUser(object):
             raise ValidationError(self.message)
 
 class ValidPassword(object):
+    """Validator to guarantee password validity."""
+
     def __init__(self, message='Password invalid'):
         self.message = message
 
@@ -38,16 +42,22 @@ password_validator = [
 ]
 
 class ChangePasswordForm(FlaskForm):
+    """This class represent a change password form."""
+
     current_password = PasswordField('Current password', [ DataRequired(), ValidPassword() ])
     password = PasswordField('Password', password_validator)
     confirm = PasswordField('Confirm Password')
 
 class LoginForm(FlaskForm):
+    """This class represent a login form."""
+
     email = StringField('Email', [ DataRequired(), Email() ])
     password = PasswordField('Password', [ DataRequired() ])
     login = SubmitField('Login')
 
 class SignUpForm(FlaskForm):
+    """This class represent a sign-up form."""
+
     username = StringField('Username', [
         DataRequired(),
         Length(min=3, max=20)

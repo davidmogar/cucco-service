@@ -4,6 +4,14 @@ from app.models.users import User
 from flask import current_app
 
 def populate_users_table(app, db):
+    """Populate users table.
+
+    This method populate users table adding initial entries.
+
+    Attributes:
+        app: Instance of the Flask app.
+        db: Instance of the database.
+    """
     user_datastore
     with app.app_context():
         try:

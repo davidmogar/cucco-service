@@ -10,7 +10,13 @@ roles_users = db.Table('roles_users',
         db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
 
 class User(db.Model, UserMixin):
-    """This class represents a user of the api."""
+    """This class represents a user of the API.
+
+    Attributes:
+        username: Username of the user.
+        email: Email address.
+        password: Password of the user.
+    """
 
     __tablename__ = 'users'
 
@@ -37,4 +43,9 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def generate_key():
+        """Generate an API key.
+
+        Returns:
+            A string representing a valid API key.
+        """
         return uuid.uuid4().hex

@@ -7,6 +7,14 @@ roles = [
 ]
 
 def populate_roles_table(app, db):
+    """Populate roles table.
+
+    This method populate roles table adding initial entries.
+
+    Attributes:
+        app: Instance of the Flask app.
+        db: Instance of the database.
+    """
     with app.app_context():
         for role_data in roles:
             try:

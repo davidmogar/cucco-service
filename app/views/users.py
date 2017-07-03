@@ -13,6 +13,8 @@ users = Blueprint('users', __name__)
 @users.route("/generate")
 @login_required
 def generate():
+    """Endpoint to generate a new API key."""
+    
     current_user.api_key = User.generate_key()
     user_datastore.commit()
 
@@ -22,6 +24,8 @@ def generate():
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
+    """Endpoint to login into the application."""
+
     login_form = LoginForm()
     signup_form = SignUpForm()
 
@@ -39,6 +43,8 @@ def login():
 @users.route("/logout")
 @login_required
 def logout():
+    """Endpoint to logout the current user."""
+
     logout_user()
 
     flash("You have logged out")
@@ -49,6 +55,8 @@ def logout():
 @users.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    """Endpoint to access the current user profile."""
+
     form = ChangePasswordForm()
 
     if request.method == 'POST':
@@ -68,6 +76,11 @@ def profile():
 
 @users.route('/users/<user_id>/remove', methods=['GET'])
 def remove(user_id):
+    """Endpoint to remove a user from the database.
+
+    Attributes:
+        user_id: Id of the user to remove.
+    """
     removed = False
     user = user_datastore.find_user(id=user_id)
     if user:
@@ -78,17 +91,21 @@ def remove(user_id):
     return make_response(jsonify(removed=True, user_id=user_id))
 
 def process_login_request(form):
+    """Process a login form and load the user if valid.
+
+    Attributes:
+        form: Form to process.
+
+    Returns:
+        A boolean indicating whether the form is valid.
+    """
     valid = False
 
     if form.validate_on_submit():
-        print('valid form')
         user = user_datastore.get_user(form.email.data)
         if user:
-            print('found user')
             if verify_password(form.password.data, user.password):
-                print('valid password')
                 if login_user(user):
-                    print('login')
                     user.authenticated = True
                     user_datastore.commit()
                     valid = True
@@ -99,6 +116,14 @@ def process_login_request(form):
     return valid
 
 def process_signup_request(form):
+    """Process a signup form and creates a user if valid.
+
+    Attributes:
+        form: Form to process.
+
+    Returns:
+        A boolean indicating whether the form is valid.
+    """
     valid = False
 
     if form.validate_on_submit():

@@ -11,6 +11,15 @@ DEFAULT_BLUEPRINTS = [
 ]
 
 def create_app(config_object='config.DevelopmentConfig', blueprints=None):
+    """Create and configure a new Flask app.
+
+    Attributes:
+        config_object: Name of the config to use.
+        blueprints: Blueprints to use on this instance.
+
+    Returns:
+        A new Flask instance.
+    """
     if blueprints is None:
         blueprints = DEFAULT_BLUEPRINTS
 
@@ -24,14 +33,31 @@ def create_app(config_object='config.DevelopmentConfig', blueprints=None):
     return app
 
 def configure_app(app, config_object):
+    """Configure a Flask application using a config object.
+
+    Attributes:
+        app: Flask application.
+        config_object: Name of the config object to use.
+    """
     app.config.from_object(config_object)
     app.config.from_pyfile('config.cfg', silent=True)
 
 def configure_blueprints(app, blueprints):
+    """Configure blueprints to use in a Flask application.
+
+    Attributes:
+        app: Flask application.
+        blueprints: List of blueprints to use.
+    """
     for blueprint in blueprints:
         app.register_blueprint(blueprint)
 
 def configure_extensions(app):
+    """Configure extensions for a Flask application.
+
+    Attributes:
+        app: Flask application.
+    """
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     limiter.init_app(app)
@@ -40,6 +66,11 @@ def configure_extensions(app):
     session.init_app(app)
 
 def configure_error_handlers(app):
+    """Configure error handlers for a Flask application.
+
+    Attributes:
+        app: Flask application.
+    """
     @app.errorhandler(400)
     def bad_request(e):
         return make_response(jsonify(error=e.description), 400)
@@ -64,6 +95,12 @@ def configure_error_handlers(app):
         return make_response(jsonify(error=e.description), 500)
 
 def populate_db(app, db):
+    """Populate db with new entries.
+
+    Attributes:
+        app: Flask application.
+        db: Instance of database.
+    """
     from app.models.populators.roles import populate_roles_table
     from app.models.populators.users import populate_users_table
 

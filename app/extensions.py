@@ -27,12 +27,14 @@ login_manager = LoginManager()
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Loads a user from the current Flask app.
+
+    Attributes:
+        user_id: Username.
+
+    Returns:
+        A user or None.
     """
-    This will be used many times like on using current_user
-    :param user_id: username
-    :return: user or none
-    """
-    # http://librelist.com/browser/flask/2012/4/7/current-blueprint/#44814417e8289f5f5bb9683d416ee1ee
     blueprint = current_app.blueprints[request.blueprint]
 
     return User.query.get(int(user_id))
