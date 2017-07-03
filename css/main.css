@@ -397,6 +397,9 @@ body {
 h1 {
   font-family: 'Pacifico', cursive; }
 
+h1, h2, h3, h4, h5 {
+  word-break: break-all; }
+
 .gradient {
   color: #c779d0;
   background-image: linear-gradient(to right, #4bc0c8, #c779d0, #feac5e);
@@ -807,6 +810,7 @@ img {
   font-size: 0.9em;
   font-style: normal;
   list-style: none;
+  margin: 0;
   padding: 0.5em 1em; }
 
 .box.column {
@@ -819,8 +823,8 @@ img {
 @media (min-width: 640px) {
   .box.column:nth-of-type(1) {
     margin-bottom: 0;
-    margin-left: 1em; }
-  .box.column:nth-of-type(1) {
+    margin: 0 1em; }
+  .box.column:nth-of-type(2) {
     margin-right: 1em; } }
 .codebox {
   background: white;
@@ -1178,47 +1182,6 @@ footer {
     #api .endpoint.row .column {
       flex: 0 0 50%;
       max-width: 50%; } }
-#features {
-  margin-bottom: 2em;
-  margin-top: 2em;
-  text-align: center; }
-  #features h4 {
-    font-size: 2.2rem; }
-
-#getting-started {
-  text-align: center; }
-  #getting-started::after {
-    background-color: #f6f9fc; }
-  #getting-started .container {
-    padding-top: 3em; }
-  #getting-started h5 {
-    text-transform: uppercase; }
-  #getting-started > .container > span {
-    display: block;
-    font-size: 1.8em;
-    font-weight: 400; }
-  #getting-started .box {
-    margin-top: 2em;
-    text-align: left; }
-    #getting-started .box .hljs {
-      background: transparent; }
-    #getting-started .box h6 {
-      font-weight: 400;
-      margin-bottom: 0; }
-    #getting-started .box p {
-      margin-bottom: 1em; }
-    #getting-started .box pre {
-      background-color: #f6f9fc;
-      border-radius: 5px;
-      padding: 0 1em; }
-
-@media (min-width: 940px) {
-  #features {
-    margin-bottom: 5em; }
-
-  .box {
-    margin: 0 auto;
-    max-width: 800px; } }
 #documentation .sidebar {
   flex: 0 0 100%;
   max-width: 100%; }
@@ -1250,5 +1213,53 @@ footer {
   #documentation .column:nth-of-type(2) {
     flex: 0 0 75%;
     max-width: 75%; } }
+#features {
+  margin-bottom: 2em;
+  margin-top: 2em;
+  text-align: center; }
+  #features h4 {
+    font-size: 2.2rem; }
+
+#getting-started {
+  text-align: center; }
+  #getting-started::after {
+    background-color: #f6f9fc; }
+  #getting-started .container {
+    padding-top: 3em; }
+  #getting-started h5 {
+    text-transform: uppercase; }
+  #getting-started > .container > span {
+    display: block;
+    font-size: 1.8em;
+    font-weight: 400; }
+  #getting-started .box {
+    background: white;
+    border-radius: 5px;
+    margin-top: 2em;
+    padding: 1em;
+    text-align: left; }
+    #getting-started .box .hljs {
+      background: transparent; }
+    #getting-started .box h6 {
+      font-weight: 400;
+      margin-bottom: 0; }
+    #getting-started .box p {
+      margin-bottom: 1em; }
+    #getting-started .box pre {
+      background-color: #f6f9fc;
+      border-left: none;
+      border-radius: 5px;
+      margin: 0.5em 0;
+      padding: 0 1em; }
+
+@media (min-width: 940px) {
+  #features {
+    margin-bottom: 5em; }
+
+  .box {
+    margin: 0 auto;
+    max-width: 800px; } }
+#users {
+  margin-top: 2em; }
 
 /*# sourceMappingURL=main.css.map */
