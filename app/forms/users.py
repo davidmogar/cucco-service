@@ -22,8 +22,8 @@ class ValidPassword(object):
         self.message = message
 
     def __call__(self, form, field):
-        if not current_user or verify_password(field.data,
-                                               current_user.password):
+        if not current_user or verify_password(current_user.password,
+                                               field.data):
             raise ValidationError(self.message)
 
 email_validator = [
@@ -44,8 +44,8 @@ password_validator = [
 class ChangePasswordForm(FlaskForm):
     """This class represent a change password form."""
 
-    current_password = PasswordField('Current password', [ DataRequired(), ValidPassword() ])
-    password = PasswordField('Password', password_validator)
+    password = PasswordField('Current password', [ DataRequired(), ValidPassword() ])
+    new_password = PasswordField('Password', password_validator)
     confirm = PasswordField('Confirm Password')
 
 class LoginForm(FlaskForm):

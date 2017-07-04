@@ -14,7 +14,7 @@ users = Blueprint('users', __name__)
 @login_required
 def generate():
     """Endpoint to generate a new API key."""
-    
+
     current_user.api_key = User.generate_key()
     user_datastore.commit()
 
